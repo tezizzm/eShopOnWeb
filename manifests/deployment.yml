@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "actionsaks-67e3"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "actionsaks-67e3"
+  template:
+    metadata:
+      labels:
+        app: "actionsaks-67e3"
+    spec:
+      containers:
+        - name: "actionsaks-67e3"
+          image: "ghactionsaks.azurecr.io/actionsaks"
+          ports:
+          - containerPort: 80
