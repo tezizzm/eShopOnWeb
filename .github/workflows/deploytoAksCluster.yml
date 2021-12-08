@@ -15,7 +15,7 @@ jobs:
       id: build-image
       run: |
         docker build "$GITHUB_WORKSPACE" -f  "src/Web/Dockerfile" -t ghactionsaks.azurecr.io/actionsaks:${{ github.sha }} --label dockerfile-path=src/Web/Dockerfile
-        docker push ghactionsaks.azurecr.io/Web:${{ github.sha }}
+        docker push ghactionsaks.azurecr.io/web:${{ github.sha }}
     
     - uses: azure/k8s-set-context@v1
       with:
@@ -65,7 +65,7 @@ jobs:
       id: build-image
       run: |
         docker build "$GITHUB_WORKSPACE" -f  "src/PublicApi/Dockerfile" -t ghactionsaks.azurecr.io/actionsaks:${{ github.sha }} --label dockerfile-path=src/PublicApi/Dockerfile
-        docker push ghactionsaks.azurecr.io/PublicApi:${{ github.sha }}
+        docker push ghactionsaks.azurecr.io/publicapi:${{ github.sha }}
     
     - uses: azure/k8s-set-context@v1
       with:
