@@ -1,19 +1,39 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: "actionsaks-67e3"
+  name: "web"
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: "actionsaks-67e3"
+      app: "web"
   template:
     metadata:
       labels:
-        app: "actionsaks-67e3"
+        app: "web"
     spec:
       containers:
-        - name: "actionsaks-67e3"
-          image: "ghactionsaks.azurecr.io/actionsaks"
+        - name: "web"
+          image: "ghactionsaks.azurecr.io/web"
+          ports:
+          - containerPort: 80
+---
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "publicapi"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "publicapi"
+  template:
+    metadata:
+      labels:
+        app: "publicapi"
+    spec:
+      containers:
+        - name: "publicapi"
+          image: "ghactionsaks.azurecr.io/publicapi"
           ports:
           - containerPort: 80
