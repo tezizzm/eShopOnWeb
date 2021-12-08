@@ -14,7 +14,7 @@ jobs:
     - name: Build and push image to ACR
       id: build-image
       run: |
-        docker build "$GITHUB_WORKSPACE" -f  "src/Web/Dockerfile" -t ghactionsaks.azurecr.io/actionsaks:${{ github.sha }} --label dockerfile-path=src/Web/Dockerfile
+        docker build "$GITHUB_WORKSPACE" -f  "src/Web/Dockerfile" -t ghactionsaks.azurecr.io/web:${{ github.sha }} --label dockerfile-path=src/Web/Dockerfile
         docker push ghactionsaks.azurecr.io/web:${{ github.sha }}
     
     - uses: azure/k8s-set-context@v1
@@ -64,7 +64,7 @@ jobs:
     - name: Build and push image to ACR
       id: build-image
       run: |
-        docker build "$GITHUB_WORKSPACE" -f  "src/PublicApi/Dockerfile" -t ghactionsaks.azurecr.io/actionsaks:${{ github.sha }} --label dockerfile-path=src/PublicApi/Dockerfile
+        docker build "$GITHUB_WORKSPACE" -f  "src/PublicApi/Dockerfile" -t ghactionsaks.azurecr.io/publicapi:${{ github.sha }} --label dockerfile-path=src/PublicApi/Dockerfile
         docker push ghactionsaks.azurecr.io/publicapi:${{ github.sha }}
     
     - uses: azure/k8s-set-context@v1
