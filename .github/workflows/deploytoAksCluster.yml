@@ -46,7 +46,7 @@ jobs:
           manifests/service.yml
           manifests/ingress.yml
         images: |
-          ghactionsaks.azurecr.io/actionsaks:${{ github.sha }}
+          ghactionsaks.azurecr.io/web:${{ github.sha }}
         imagepullsecrets: |
           actionsaksdockerauth
           
@@ -96,6 +96,6 @@ jobs:
           manifests/service.yml
           manifests/ingress.yml
         images: |
-          ghactionsaks.azurecr.io/actionsaks:${{ github.sha }}
+          ghactionsaks.azurecr.io/publicapi:${{ github.sha }}
         imagepullsecrets: |
           actionsaksdockerauth
