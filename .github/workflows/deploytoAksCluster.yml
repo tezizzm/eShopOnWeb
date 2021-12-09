@@ -2,7 +2,7 @@ name: "Build and Deploy"
 
 on: [push]
 jobs:
-  build-and-deploy-web:
+  build-web:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -118,7 +118,8 @@ jobs:
     needs: [deploy-db]
     runs-on: ubuntu-latest
     steps:
-    
+    - uses: actions/checkout@master
+
     - uses: azure/docker-login@v1
       with:
         login-server: ghactionsaks.azurecr.io
@@ -157,3 +158,47 @@ jobs:
         imagepullsecrets: |
           actionsaksdockerauth
 
+  deploy-web:
+    needs: [deploy-db]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: ghactionsaks.azurecr.io
+        username: ${{ secrets.acr_ghactionsaks_username }}
+        password: ${{ secrets.acr_ghactionsaks_password }}
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_actionsaks_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep actions-aks | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace actions-aks`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: actions-aks
+        container-registry-url: ghactionsaks.azurecr.io
+        container-registry-username: ${{ secrets.acr_ghactionsaks_username }}
+        container-registry-password: ${{ secrets.acr_ghactionsaks_password }}
+        secret-name: actionsaksdockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: actions-aks
+        manifests: |
+          manifests/deployment-web.yml
+          manifests/service-web.yml
+          manifests/ingress-web.yml
+        images: |
+          ghactionsaks.azurecr.io/web:${{ github.sha }}
+        imagepullsecrets: |
+          actionsaksdockerauth
