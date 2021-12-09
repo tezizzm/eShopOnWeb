@@ -18,39 +18,6 @@ jobs:
       run: |
         docker build "$GITHUB_WORKSPACE" -f  "src/Web/Dockerfile" -t ghactionsaks.azurecr.io/web:${{ github.sha }} --label dockerfile-path=src/Web/Dockerfile
         docker push ghactionsaks.azurecr.io/web:${{ github.sha }}
-    
-    - uses: azure/k8s-set-context@v1
-      with:
-         kubeconfig: ${{ secrets.aks_actionsaks_kubeConfig }}
-      id: login
-    
-    - name: Create namespace
-      run: |
-        namespacePresent=`kubectl get namespace | grep actions-aks | wc -l`
-        if [ $namespacePresent -eq 0 ]
-        then
-            echo `kubectl create namespace actions-aks`
-        fi
-
-    - uses: azure/k8s-create-secret@v1
-      with:
-        namespace: actions-aks
-        container-registry-url: ghactionsaks.azurecr.io
-        container-registry-username: ${{ secrets.acr_ghactionsaks_username }}
-        container-registry-password: ${{ secrets.acr_ghactionsaks_password }}
-        secret-name: actionsaksdockerauth
-       
-    - uses: azure/k8s-deploy@v1.2
-      with:
-        namespace: actions-aks
-        manifests: |
-          manifests/deployment-web.yml
-          manifests/service-web.yml
-          manifests/ingress-web.yml
-        images: |
-          ghactionsaks.azurecr.io/web:${{ github.sha }}
-        imagepullsecrets: |
-          actionsaksdockerauth
           
   build-api:
     runs-on: ubuntu-latest
