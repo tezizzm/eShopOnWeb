@@ -2,7 +2,7 @@ name: "Build and Deploy"
 
 on: [push]
 jobs:
-  build-web:
+  build-web-image:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -19,7 +19,7 @@ jobs:
         docker build "$GITHUB_WORKSPACE" -f  "src/Web/Dockerfile" -t ghactionsaks.azurecr.io/web:${{ github.sha }} --label dockerfile-path=src/Web/Dockerfile
         docker push ghactionsaks.azurecr.io/web:${{ github.sha }}
           
-  build-api:
+  build-api-image:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master

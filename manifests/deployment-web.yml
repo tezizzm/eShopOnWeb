@@ -23,6 +23,6 @@ spec:
           - name: baseUrls__webBase
             value: web.actions-aks.svc.cluster.local:8080/
           - name: ConnectionStrings__CatalogConnection
-            value: "Server=tcp:db,1433;Initial Catalog=Microsoft.eShopOnWeb.CatalogDb;Persist Security Info=False;User Id=sa;Password=TEMP_PASSWORD;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Connection Timeout=30;"
+            value: "Server=10.0.48.251;Database=Microsoft.eShopOnWeb.CatalogDb;User Id=sa;Password=TEMP_PASSWORD;"
           - name: ConnectionStrings__IdentityConnection
-            value: "Server=tcp:db,1433;Initial Catalog=Microsoft.eShopOnWeb.Identity;Persist Security Info=False;User Id=sa;Password=TEMP_PASSWORD;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Connection Timeout=30;"
+            value: "Server=10.0.48.251;Database=Microsoft.eShopOnWeb.Identity;User Id=sa;Password=TEMP_PASSWORD;"
