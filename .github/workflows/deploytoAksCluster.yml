@@ -37,7 +37,7 @@ jobs:
         docker push ghactionsaks.azurecr.io/publicapi:${{ github.sha }}
 
   deploy-db:
-    needs: [build-web, build-api]
+    needs: [build-web-image, build-api-image]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
