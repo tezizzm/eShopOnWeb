@@ -138,7 +138,6 @@ jobs:
         manifests: |
           manifests/deployment-api.yml
           manifests/service-api.yml
-          manifests/ingress-api.yml
         images: |
           ghactionsaks.azurecr.io/publicapi:${{ github.sha }}
         imagepullsecrets: |
