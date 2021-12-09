@@ -4,7 +4,9 @@ metadata:
   name: db
 spec:
   ports:
-  - port: 1433
+  - name: db
+    port: 1433
     targetPort: 1433
+    protocol: TCP
   selector:
     app: "db"
