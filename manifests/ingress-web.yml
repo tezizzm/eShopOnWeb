@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "web"
+  labels:
+    app: "web"
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+    - host: actions-aks-actionsaks-67e3.d19c4f4e637448fe8bbb.westus2.aksapp.io
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: "web"
+            servicePort: 80

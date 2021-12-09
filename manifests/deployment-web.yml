@@ -1,0 +1,28 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "web"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "web"
+  template:
+    metadata:
+      labels:
+        app: "web"
+    spec:
+      containers:
+        - name: "web"
+          image: "ghactionsaks.azurecr.io/web"
+          ports:
+          - containerPort: 80
+          env:
+          - name: baseUrls__apiBase
+            value: publicapi.actions-aks.svc.cluster.local:8080/api/
+          - name: baseUrls__webBase
+            value: web.actions-aks.svc.cluster.local:8080/
+          - name: ConnectionStrings__CatalogConnection
+            value: "Server=db.actions-aks.svc.cluster.local,1433;User Id=sa;Password=TEMP_PASSWORD;Database=Microsoft.eShopOnWeb.CatalogDb;"
+          - name: ConnectionStrings__IdentityConnection
+            value: "Server=db.actions-aks.svc.cluster.local,1433;User Id=sa;Password=TEMP_PASSWORD;Database=Microsoft.eShopOnWeb.Identity;"
